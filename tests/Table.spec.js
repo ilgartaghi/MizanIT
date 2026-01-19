@@ -18,15 +18,52 @@ test("handling table",async ({page})=>{
     expect(await rows.count()).toBe(5);
 
     //2. Select checkbox for product 4
-
-    await rows.filter({
-        has: page.locator('td');
-        hasText: 'Product 4'
+/*
+    const machedRow = await rows.filter({
+        has: page.locator('td'),
+        hasText: 'Smartwatch'
     })
 
+    await machedRow.locator('input').check();
+*/
 
+    //3. Select multiple products by using reusable function
+/*
+    await selectProduct(rows,page,'Smartphone');
+    await selectProduct(rows,page,'Laptop');
+    await selectProduct(rows,page,'Wireless Earbuds');
+    await selectProduct(rows,page,'Gaming Console');
+*/
 
+    //4. print all product details using loop
 
+    for(let i=0; i<await rows.count();i++)
+    
+    {
+        const row = rows.nth(i);
+        const tds = row.locator('td')
 
-        await page.waitForTimeout(5000);
+        for(let j=0;j<await tds.count()-1;j++)
+        {
+            console.log(await tds.nth(j).textContent());
+        }
+
+    }
+
+    await page.waitForTimeout(5000);
 })
+
+
+
+async function selectProduct(rows, page, name)
+{
+
+    const machedRow = rows.filter({
+        has: page.locator('td'),
+        hasText: name
+    })
+
+    await machedRow.locator('input').check();
+
+
+}
