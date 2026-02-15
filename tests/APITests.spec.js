@@ -17,7 +17,7 @@ test.only("Get users", async ({request}) => {
           "Accept": "application/json"
       }
   });
-  expect(response.status()).toBe(201);
+  expect(response.status()).toBe(201)
   expect(response.ok()).toBeTruthy();
  console.log(await response.json());
   var res=await response.json()
